@@ -1,0 +1,22 @@
+name: List Tags
+description: List Tags
+inputs:
+  go-version:
+    description: Go Version
+    required: true
+    default: '~1.18'
+runs:
+  using: composite
+  steps:
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: ${{ inputs.go-version }}
+    - name: Install `snapshot-cleaner`
+      shell: bash
+      run: |
+        go install github.com/happyRip/snapshot-cleaner@latest
+    - name: List tags
+      shell: bash
+      run: |
+        snapshot-cleaner list

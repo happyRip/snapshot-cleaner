@@ -1,0 +1,17 @@
+name: Test
+on: workflow_dispatch
+
+jobs:
+  list_tags:
+    name: List Tags
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: List Tags
+        uses: ./.github/actions/list
+        env:
+          CLEANER_USERNAME: happyRip
+          CLEANER_PASSWORD: ${{ secrets.CleanerPassword }}
+          CLEANER_TARGET: thethingsnetwork/lorawan-stack-dev
+          CLEANER_RETENTION: 999
