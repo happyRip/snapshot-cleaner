@@ -1,10 +1,15 @@
 package env
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/pkg/errors"
 )
+
+const day = 24 * time.Hour
 
 type Environment struct {
 	Username   string
@@ -23,9 +28,9 @@ func New() (*Environment, error) {
 	s := os.Getenv("CLEANER_RETENTION")
 	r, err := strconv.Atoi(s)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, fmt.Sprintf("failed to convert string %q to int", s))
 	}
-	e.Retention = time.Duration(r * int(time.Hour))
+	e.Retention = time.Duration(r*int(time.Hour)) * day
 
 	return &e, nil
 }
